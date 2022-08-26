@@ -9,6 +9,7 @@ django-allauth = "*"
 djangorestframework = "*"
 django-filter = "*"
 stripe = "*"
+pillow = "*"
 
 [dev-packages]
 black = "*"

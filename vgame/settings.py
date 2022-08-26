@@ -73,7 +73,7 @@ ROOT_URLCONF = "vgame.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "template"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -140,10 +140,16 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# CUSTOM
+SITE_ID = 1
 
 # Custom user
 AUTH_USER_MODEL = "vaccount.User"
