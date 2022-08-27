@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    {% if games %}
+    <!-- -->
+    {% for game in games %}
+    <div>
+      <p>{{game.name}}</p>
+      <p>{{game.price}} USD</p>
+      <img src="{{game.cover.url}}" />
+    </div>
+    {% endfor %}
+    <!-- -->
+    {% endif %}
+  </body>
+</html>

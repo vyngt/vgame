@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div>
+      <p>{{game.name}}</p>
+      <p>{{game.description}}</p>
+      <p>Price: {{game.price}}</p>
+      <img src="{{game.cover.url}}" alt="{{game.name}}'s' cover" />
+    </div>
+    <div>
+      <form method="POST">
+        {% csrf_token %}
+        <button type="post">Add to card</button>
+      </form>
+    </div>
+  </body>
+</html>

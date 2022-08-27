@@ -6,5 +6,8 @@ from .views import *
 app_name = "core"
 
 urlpatterns = [
-    path("", GameList.as_view(), name="game_list"),
+    path("store/", GameListView.as_view(), name="store"),
+    path("store/game/<slug:slug>/", GameDetailView.as_view(), name="store_game_detail"),
+    path("cart/", CartView.as_view(), name="cart"),
+    path("clear/", clear_session_view, name="clear"),
 ]

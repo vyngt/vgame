@@ -9,10 +9,11 @@
   <body>
     {% for game in games %}
     <div>
-      <p>{{game.name}}</p>
-      <p>{{game.description}}</p>
-      <p>Price: {{game.price}}</p>
-      <img src="{{game.cover.url}}" alt="{{game.name}}'s' cover" />
+      <a href="{% url 'core:store_game_detail' game.slug %}">
+        <p>{{game.name}}</p>
+        <p>Price: {{game.price}}</p>
+        <img src="{{game.cover.url}}" alt="{{game.name}}'s' cover" />
+      </a>
     </div>
     {% endfor %}
   </body>
