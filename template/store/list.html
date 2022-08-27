@@ -1,20 +1,47 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>List</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
-  <body>
-    {% for game in games %}
-    <div>
-      <a href="{% url 'core:store_game_detail' game.slug %}">
-        <p>{{game.name}}</p>
-        <p>Price: {{game.price}}</p>
-        <img src="{{game.cover.url}}" alt="{{game.name}}'s' cover" />
-      </a>
+{% extends 'base.html' %}
+<!---->
+{% block title %} | Store{% endblock title %}
+<!---->
+
+{% block content %}
+<!---->
+<div class="py-5">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <!-- For   -->
+      {% for game in games %}
+
+      <div class="col">
+        <div class="card shadow-sm">
+          <div>
+            <img
+              class="bd-placeholder-img card-img-top"
+              src="{{game.cover.url}}"
+              alt="{album.name}"
+            />
+          </div>
+
+          <div class="card-body">
+            <p class="card-text">Name: {{game.name}}</p>
+            <p>Price: {{game.price}} $</p>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a
+                  class="btn btn-sm btn-outline-secondary"
+                  href="{% url 'core:store_game_detail' game.slug %}"
+                  >View</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End for  -->
+      {% endfor %}
     </div>
-    {% endfor %}
-  </body>
-</html>
+  </div>
+</div>
+
+<!---->
+{% endblock content %}

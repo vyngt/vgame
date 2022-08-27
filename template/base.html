@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>VGame{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/index.css' %}"
+    />
+    {% block extra_css %}{% endblock%}
+    {% block extra_script %}{% endblock%}
+  </head>
+  <body>
+    <!-- Navbar -->
+    {% block header %}
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">VGame</a>
+        <div class="collapse navbar-collapse" id="navbarsExample02">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'core:store' %}">Store</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="button">Search</button>
+          </form>
+        </div>
+          {% if user.is_authenticated %}
+          <div class="btn-group">
+            <a
+              class="nav-link"
+              id="avatar_dropdown"
+              data-toggle="dropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+            <button class="btn btn-outline-info">{{user.username}}</button>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end"
+              aria-labelledby="avatar_dropdown"
+            >
+            <li class="dropdown-item">
+              <h5 class="mb-2"><strong>{{user.get_full_name}}</strong></h5>
+            </li>
+              <li class="divider"></li>
+              <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+            </ul>
+          </div>
+          {% else %}
+          <a class="btn btn-primary me-2" href="{% url 'account_login' %}">Sign in</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    {% endblock %}
+
+    <!-- Content -->
+    {% block content %} {% endblock%}
+
+    <!-- Scripts -->
+    {% block scripts %} {% endblock%}
+
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
