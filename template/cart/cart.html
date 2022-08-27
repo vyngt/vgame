@@ -1,28 +1,72 @@
+{% extends 'base.html' %}
+<!---->
 {% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Cart</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
-  <body>
-    {% if games %}
-    <!-- -->
-    {% for game in games %}
-    <div>
-      <p>{{game.name}}</p>
-      <p>{{game.price}} USD</p>
-      <img src="{{game.cover.url}}" />
-      <button class="remove-btn" value="{{game.pk}}" type="btn">Remove</button>
-    </div>
-    {% endfor %}
-    <!-- -->
-    {% endif %}
-    <p>Total: {{total}}</p>
-    <!-- -->
-    {% csrf_token %}
-    <script src="{% static 'js/cart.js' %}"></script>
-  </body>
-</html>
+<!---->
+{% block title %} | Cart{% endblock title %}
+<!---->
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}" />
+{% endblock extra_css %}
+<!---->
+{% block content %}
+<!-- -->
+<div class="mx-auto"><h3>Shopping Cart</h3></div>
+{% if games %}
+<div class="table-responsive">
+  <table class="table table-dark table-hover align-middle">
+    <thead>
+      <tr>
+        <th scope="col">Game</th>
+        <th scope="col"></th>
+        <th scope="col">Price</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for game in games %}
+      <tr class="align-middle">
+        <th scope="row">{{game.name}}</th>
+        <td>
+          <img
+            class="img-thumbnail game-cover"
+            src="{{game.cover.url}}"
+            alt="{{game.name}}"
+          />
+        </td>
+        <td>{{game.price}} $</td>
+        <td>
+          <button
+            class="btn btn-outline-secondary remove-btn"
+            value="{{game.pk}}"
+            type="button"
+          >
+            Remove
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+      <tr class="table-success align-middle">
+        <th scope="row">Total</th>
+        <td></td>
+        <td>{{total}} $</td>
+        <td>
+          <button class="btn btn-outline-success" type="button">
+            Checkout
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- -->
+<a class="btn btn-outline-primary" href="{% url 'core:store' %}"
+  >Continue Shopping</a
+>
+{% endif %} {% endblock content %}
+<!---->
+
+{% block scripts %}
+<!---->
+{% csrf_token %}
+<script src="{% static 'js/cart.js' %}"></script>
+{% endblock scripts %}

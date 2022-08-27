@@ -50,7 +50,6 @@ class GameDetailView(View):
         """Add to cart"""
         game = Game.objects.get(slug=slug)
         set_game_session(request.session, game, "add")
-        print(request.session)
         return redirect("core:cart")
 
 
@@ -67,11 +66,9 @@ class CartView(View):
 
     def post(self, request: HttpRequest):
         """Remove from cart"""
-        print(request.POST)
         game_id = request.POST.get("pk")
         game = Game.objects.get(pk=game_id)
         set_game_session(request.session, game, "remove")
-        print(request.session["games"])
         return JsonResponse({"ok": "removed"})
 
 

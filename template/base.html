@@ -26,10 +26,13 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home' %}">VGame</a>
-        <div class="collapse navbar-collapse" id="navbarsExample02">
+        <div class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'core:store' %}">Store</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'core:cart' %}">Cart</a>
             </li>
           </ul>
           <form class="d-flex">
