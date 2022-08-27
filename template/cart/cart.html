@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,9 +15,14 @@
       <p>{{game.name}}</p>
       <p>{{game.price}} USD</p>
       <img src="{{game.cover.url}}" />
+      <button class="remove-btn" value="{{game.pk}}" type="btn">Remove</button>
     </div>
     {% endfor %}
     <!-- -->
     {% endif %}
+    <p>Total: {{total}}</p>
+    <!-- -->
+    {% csrf_token %}
+    <script src="{% static 'js/cart.js' %}"></script>
   </body>
 </html>

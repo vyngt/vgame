@@ -23,5 +23,8 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# client side builder
+frontend_builder/
+
 # Local scripts
 *.ps1
