@@ -10,5 +10,6 @@ urlpatterns = [
     path("store/game/<slug:slug>/", GameDetailView.as_view(), name="store_game_detail"),
     path("cart/", CartView.as_view(), name="cart"),
     path("checkout/", CheckoutView.as_view(), name="checkout"),
-    path("clear/", clear_session_view, name="clear"),
+    path("checkout/thankyou/", ThankYouView.as_view(), name="thankyou"),
+    path("checkout/failed/", CheckoutFailView.as_view(), name="failed"),
 ]

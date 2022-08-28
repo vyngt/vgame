@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     # local
     "vaccount.apps.VAccountConfig",
     "core.apps.CoreConfig",
-    "payment.apps.PaymentConfig",
 ]
 
 MIDDLEWARE = [
@@ -175,6 +174,6 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = "home"
 
 # PAYMENTS
-# Stripe
-STRIPE_SK = os.environ.get("STRIPE_SK", "")
-STRIPE_PK = os.environ.get("STRIPE_PK", "")
+# Paypal
+PAYPAL_CLIENT = os.environ.get("PAYPAL_CLIENT", "")
+PAYPAL_SECRET = os.environ.get("PAYPAL_SECRET", "")

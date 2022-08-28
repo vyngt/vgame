@@ -38,7 +38,7 @@ class Library(models.Model):
     """Contain purchased items"""
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("user"))
-    games = models.ManyToManyField(Game, verbose_name=_("games"))
+    games = models.ManyToManyField(Game, verbose_name=_("games"), blank=True)
 
     def __str__(self) -> str:
         return f"Library {self.pk} | {self.user}"

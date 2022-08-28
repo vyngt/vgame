@@ -28,3 +28,6 @@ frontend_builder/
 
 # Local scripts
 *.ps1
+
+# sandbox
+sandbox.*
