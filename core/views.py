@@ -1,4 +1,6 @@
 from django.contrib.sessions.backends.base import SessionBase
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, JsonResponse
 from django.views import View
@@ -7,7 +9,13 @@ from decimal import Decimal
 from .models import Game
 from .utils import get_games_cart_query
 
-__all__ = ["GameListView", "GameDetailView", "CartView", "clear_session_view"]
+__all__ = [
+    "GameListView",
+    "GameDetailView",
+    "CartView",
+    "CheckoutView",
+    "clear_session_view",
+]
 
 
 def set_game_session(session: SessionBase, game: Game, action: str = "add"):
@@ -55,13 +63,13 @@ class GameDetailView(View):
 
 class CartView(View):
     def get(self, request: HttpRequest):
-        context = {}
-
         games_session: list[int] | None = request.session.get("games")
         query = get_games_cart_query(games_session)
         games = Game.objects.filter(query) if query else None
-        context["games"] = games
-        context["total"] = request.session.get("total", 0.0)
+        context = {
+            "games": games,
+            "total": request.session.get("total", 0.0),
+        }
         return render(request, template_name="cart/cart.html", context=context)
 
     def post(self, request: HttpRequest):
@@ -72,5 +80,18 @@ class CartView(View):
         return JsonResponse({"ok": "removed"})
 
 
-class CheckoutView(View):
-    pass
+class CheckoutView(LoginRequiredMixin, View):
+    login_url = "account_login"
+
+    def get(self, request: HttpRequest):
+        games_session: list[int] | None = request.session.get("games")
+        query = get_games_cart_query(games_session)
+        queryset = Game.objects.filter(query) if query else None
+        _sum = queryset.aggregate(Sum("price")) if queryset else None
+        context = {
+            "games": queryset,
+            "count": queryset.count() if queryset else 0,
+            "total": str(round(_sum["price__sum"], 2)) if _sum else "0.00",
+        }
+
+        return render(request, "cart/checkout.html", context=context)
