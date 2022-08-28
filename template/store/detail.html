@@ -1,23 +1,41 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>List</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
-  <body>
-    <div>
-      <p>{{game.name}}</p>
-      <p>{{game.description}}</p>
-      <p>Price: {{game.price}}</p>
-      <img src="{{game.cover.url}}" alt="{{game.name}}'s' cover" />
+{% extends 'base.html' %} {% block title %} | {{game.name}}{% endblock title %}
+
+<!---->
+
+{% block content %}
+<div class="container-sm">
+  <h4>{{game.name}}</h4>
+  <hr class="border border-success border-2 opacity-50" />
+  <figure class="figure">
+    <img
+      src="{{game.cover.url}}"
+      class="figure-img img-fluid rounded"
+      alt="{{game.name}}"
+    />
+    <figcaption class="figure-caption">{{game.name}}</figcaption>
+  </figure>
+  <hr />
+  <p><strong>Buy {{game.name}}</strong></p>
+
+  <form class="row g-3" method="POST">
+    {% csrf_token %}
+    <div class="col-auto">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          disabled
+          value="{{game.price}}"
+        />
+        <span class="input-group-text">$</span>
+      </div>
     </div>
-    <div>
-      <form method="POST">
-        {% csrf_token %}
-        <button type="post">Add to card</button>
-      </form>
+    <div class="col-auto">
+      <button class="btn btn-success" type="submit">Add to card</button>
     </div>
-  </body>
-</html>
+  </form>
+  <hr />
+  <p><strong>Description</strong></p>
+  <p>{{game.description}}</p>
+</div>
+{% endblock content %}

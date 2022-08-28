@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
 <!---->
+{% load static %}
+<!--  -->
 {% block title %} | Store{% endblock title %}
 <!---->
-
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/store.css' %}" />
+{% endblock%}
+<!--  -->
 {% block content %}
 <!---->
 <div class="py-5">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <!-- For   -->
       {% for game in games %}
-
       <div class="col">
         <div class="card shadow-sm">
           <div>
             <img
-              class="bd-placeholder-img card-img-top"
+              class="game-card bd-placeholder-img card-img-top"
               src="{{game.cover.url}}"
               alt="{album.name}"
             />
@@ -37,7 +40,6 @@
           </div>
         </div>
       </div>
-      <!-- End for  -->
       {% endfor %}
     </div>
   </div>
