@@ -1,17 +1,13 @@
-from django.conf import settings
 from django.contrib.sessions.backends.base import SessionBase
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, JsonResponse
-
-
 from django.views import View
+from django.views.generic import TemplateView
 
 from decimal import Decimal
-from vaccount.auth.http import AuthHttpRequest
-from vaccount.models import User
-from .models import Game, Library, OrderDetail, OrderItem, PaymentDetail
+
+from .models import Game
 from .utils import get_games_cart_query
 
 __all__ = [
@@ -81,7 +77,5 @@ class CartView(View):
         return JsonResponse({"ok": "removed"})
 
 
-class LibraryView(LoginRequiredMixin, View):
-    def get(self, request: AuthHttpRequest):
-        context = {}
-        return render(request, "library/index.html", context)
+class LibraryView(LoginRequiredMixin, TemplateView):
+    template_name = "library/index.html"

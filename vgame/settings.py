@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "vaccount.apps.VAccountConfig",
     "core.apps.CoreConfig",
     "checkout.apps.CheckoutConfig",
+    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [

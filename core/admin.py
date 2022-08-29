@@ -32,6 +32,3 @@ class GameAdmin(admin.ModelAdmin):
 
 admin.site.register(Game, GameAdmin)
 admin.site.register(Library)
-admin.site.register(OrderDetail)
-admin.site.register(OrderItem)
-admin.site.register(PaymentDetail)
