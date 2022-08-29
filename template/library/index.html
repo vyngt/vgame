@@ -1,7 +1,46 @@
 {% extends 'base.html' %}
+<!-- -->
+{% load static %}
 <!---->
 {% block title %} | Library{% endblock title %}
 <!--  -->
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/library.css' %}" />
+{% endblock extra_css%}
+<!--  -->
 {% block content %}
-<div>Library</div>
+<div class="container">
+  <div class="my-5 pt-5 text-center text-small">
+    <h4 class="mb-1"><strong>My Games</strong></h4>
+  </div>
+  <table class="table table-dark table-hover align-middle">
+    <thead>
+      <tr>
+        <th scope="col">Game</th>
+        <th scope="col">Cover</th>
+        <th scope="col"></th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for game in user.library.games.all %}
+      <tr class="align-middle">
+        <th scope="row">{{game.name}}</th>
+        <td>
+          <img
+            class="img-thumbnail library-game-cover"
+            src="{{game.cover.url}}"
+            alt="{{game.name}}"
+          />
+        </td>
+        <td></td>
+        <td>
+          <button class="btn btn-success" type="button">Play</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
 {% endblock content %}
