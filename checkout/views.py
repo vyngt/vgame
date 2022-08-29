@@ -40,7 +40,7 @@ class CheckoutView(LoginRequiredMixin, View):
             "total": str(round(_sum["price__sum"], 2)) if _sum else "0.00",
         }
 
-        return render(request, "checkout/checkout.html", context=context)
+        return render(request, "checkout/index.html", context=context)
 
     def create_payment(self, order_id: str, amount: Decimal):
         return PaymentDetail.objects.create(order_id=order_id, amount=amount)

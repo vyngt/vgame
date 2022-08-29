@@ -38,7 +38,7 @@ def set_game_session(session: SessionBase, game: Game, action: str = "add"):
             games.remove(game.pk)
             total -= game.price
         session["games"] = games
-        session["total"] = float("{:.2f}".format(total))
+        session["total"] = str(round(total, 2))
 
 
 class GameListView(View):
