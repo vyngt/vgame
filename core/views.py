@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.contrib.sessions.backends.base import SessionBase
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Sum, QuerySet
+
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, JsonResponse
 
-from django.views.generic import TemplateView
+
 from django.views import View
 
 from decimal import Decimal
@@ -82,4 +82,6 @@ class CartView(View):
 
 
 class LibraryView(LoginRequiredMixin, View):
-    pass
+    def get(self, request: AuthHttpRequest):
+        context = {}
+        return render(request, "library/index.html", context)
