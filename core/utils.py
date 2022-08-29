@@ -1,8 +1,9 @@
 from datetime import datetime
 from django.utils.text import slugify
 from django.db.models import Q
+from django.contrib.sessions.backends.base import SessionBase
 
-__all__ = ["build_slug", "get_games_cart_query"]
+__all__ = ["build_slug", "get_games_cart_query", "clear_shopping_session"]
 
 
 def build_slug(text: str, auto_now: bool = False, allow_unicode: bool = False) -> str:
@@ -23,3 +24,8 @@ def get_games_cart_query(games: list[int] | None):
                 query |= Q(pk=game)
 
     return query
+
+
+def clear_shopping_session(session: SessionBase):
+    del session["total"]
+    del session["games"]

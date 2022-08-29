@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     # local
     "vaccount.apps.VAccountConfig",
     "core.apps.CoreConfig",
+    "checkout.apps.CheckoutConfig",
 ]
 
 MIDDLEWARE = [
@@ -177,3 +178,4 @@ LOGIN_REDIRECT_URL = "home"
 # Paypal
 PAYPAL_CLIENT = os.environ.get("PAYPAL_CLIENT", "")
 PAYPAL_SECRET = os.environ.get("PAYPAL_SECRET", "")
+PAYPAL_API_URL = os.environ.get("PAYPAL_API_URL", "")
