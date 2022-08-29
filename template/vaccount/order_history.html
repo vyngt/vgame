@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+<!-- -->
+{% load static %}
+<!---->
+{% block title %} | Library{% endblock title %}
+<!--  -->
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/library.css' %}" />
+{% endblock extra_css%}
+<!--  -->
+{% block content %}
+<div class="container">
+  <div class="my-5 pt-5 text-center text-small">
+    <h4 class="mb-1"><strong>Order History</strong></h4>
+  </div>
+  <table class="table table-dark table-hover align-middle">
+    <thead>
+      <tr>
+        <th scope="col">Transaction</th>
+        <th scope="col">Content</th>
+        <th scope="col">Amount (USD)</th>
+        <th scope="col">Purchased</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in user.orderdetail_set.all %}
+      <tr class="align-middle">
+        <th scope="row">{{order.payment.order_id}}</th>
+        <td>
+          <ul>
+            {% for item in order.orderitem_set.all %}
+            <li>{{item.game.name}}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>${{order.payment.amount}}</td>
+        <td>{{order.created}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}

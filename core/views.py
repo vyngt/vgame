@@ -15,8 +15,9 @@ __all__ = [
     "GameListView",
     "GameDetailView",
     "CartView",
-    # User Library
+    # For User
     "LibraryView",
+    "OrderHistoryView",
 ]
 
 
@@ -78,4 +79,8 @@ class CartView(View):
 
 
 class LibraryView(LoginRequiredMixin, TemplateView):
-    template_name = "library/index.html"
+    template_name = "vaccount/library.html"
+
+
+class OrderHistoryView(LoginRequiredMixin, TemplateView):
+    template_name = "vaccount/order_history.html"
