@@ -49,3 +49,6 @@ class CheckoutView(LoginRequiredMixin, View):
             "total": str(round(_sum["price__sum"], 2)) if _sum else "0.00",
         }
         return render(request, "checkout/index.html", context=context)
+
+
+# TODO: Loại bỏ những item đã mua rồi trong quá trình thanh toán.
