@@ -72,9 +72,19 @@
             aria-labelledby="user_dropdown"
           >
             <li class="dropdown-item">
-              <h5 class="mb-2"><strong>{{user.username}}</strong></h5>
+              <h5 class="mb-2">
+                <strong>
+                  {% if user.get_full_name %} {{user.get_full_name}} {% else %}
+                  {{user.username}} {% endif %}
+                </strong>
+              </h5>
             </li>
             <li class="divider"></li>
+            {% if user.is_staff %}
+            <li>
+              <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+            </li>
+            {% endif %}
             <li>
               <a class="dropdown-item" href="{% url 'core:library' %}"
                 >Library</a
