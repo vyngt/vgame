@@ -10,6 +10,7 @@ djangorestframework = "*"
 django-filter = "*"
 pillow = "*"
 requests = "*"
+django-extensions = "*"
 
 [dev-packages]
 black = "*"
@@ -17,6 +18,8 @@ pytest-cov = "*"
 pytest-django = "*"
 mypy = "*"
 ipython = "*"
+pyparsing = "*"
+pydot = "*"
 
 [requires]
 python_version = "3.10"

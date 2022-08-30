@@ -7,7 +7,7 @@ db.sqlite3
 
 *.dot
 .design/
-
+.graph/
 # Unit test / coverage reports
 htmlcov/
 .tox/

@@ -7,6 +7,5 @@ from .models import User
 
 @receiver(post_save, sender=User)
 def init_library(sender, instance: User, created: bool, **kwargs):
-    print(created)
     if created:
         Library.objects.create(user=instance)
