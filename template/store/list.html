@@ -15,26 +15,28 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       {% for game in games %}
       <div class="col">
-        <div class="card shadow-sm">
+        <div class="card-game-border card shadow-sm">
           <div>
             <img
-              class="game-card bd-placeholder-img card-img-top"
+              class="game-store-cover bd-placeholder-img card-img-top"
               src="{{game.cover.url}}"
               alt="{album.name}"
             />
           </div>
 
-          <div class="card-body">
-            <p class="card-text">Name: {{game.name}}</p>
-            <p>Price: {{game.price}} $</p>
+          <div class="card-game">
+            <div class="card-body">
+              <p class="card-text">Name: {{game.name}}</p>
+              <p>Price: $ {{game.price}}</p>
 
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <a
-                  class="btn btn-sm btn-outline-secondary"
-                  href="{% url 'core:store_game_detail' game.slug %}"
-                  >View</a
-                >
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a
+                    class="btn btn-sm btn-outline-secondary"
+                    href="{% url 'core:store_game_detail' game.slug %}"
+                    >View</a
+                  >
+                </div>
               </div>
             </div>
           </div>

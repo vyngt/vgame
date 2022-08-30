@@ -1,3 +1,10 @@
-.game-card {
+.game-store-cover {
   max-height: 300px;
+}
+.card-game-border {
+  border-color: red;
+}
+
+.card-game {
+  background-color: rgb(126, 2, 69) !important;
 }
