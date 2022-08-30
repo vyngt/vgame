@@ -31,3 +31,4 @@ frontend_builder/
 
 # sandbox
 sandbox.*
+.prettierignore
