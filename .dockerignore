@@ -1,0 +1,34 @@
+.vscode/
+venv/
+__pycache__/
+
+db.sqlite3
+.env
+
+*.dot
+.design/
+.graph/
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# client side builder
+frontend_builder/
+
+# Local scripts
+*.ps1
+
+# sandbox
+sandbox.*
+.prettierignore

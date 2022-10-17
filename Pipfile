@@ -11,6 +11,8 @@ django-filter = "*"
 pillow = "*"
 requests = "*"
 django-extensions = "*"
+whitenoise = "*"
+stripe = "*"
 
 [dev-packages]
 black = "*"

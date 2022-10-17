@@ -17,7 +17,7 @@ class Game(models.Model):
     description = models.TextField(_("description"))
     price = models.DecimalField(_("price"), max_digits=4, decimal_places=2)
     cover = models.ImageField(
-        _("cover"), upload_to=path_game_cover, default="default/cover.png"
+        _("cover"), upload_to=path_game_cover, default="default/cover.png"  # type: ignore
     )
     slug = models.SlugField(_("slug"), max_length=130, unique=True)
     modified = models.DateTimeField(_("modified"), auto_now=True)

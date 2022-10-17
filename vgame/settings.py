@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # whitenoise
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -140,10 +141,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "assets"
+# STATIC_ROOT = BASE_DIR / "assets"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -180,7 +183,13 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = "home"
 
 # PAYMENTS
+DOMAIN = os.environ.get("P_DOMAIN")
+
 # Paypal
 PAYPAL_CLIENT = os.environ.get("PAYPAL_CLIENT", "")
 PAYPAL_SECRET = os.environ.get("PAYPAL_SECRET", "")
 PAYPAL_API_URL = os.environ.get("PAYPAL_API_URL", "")
+
+# Stripe
+STRIPE_CLIENT = os.environ.get("STRIPE_CLIENT")
+STRIPE_SECRET = os.environ.get("STRIPE_SECRET")

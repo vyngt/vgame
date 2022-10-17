@@ -26,8 +26,20 @@
       src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id={{client_id}}"
       data-client-token="{{client_token}}"
     ></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script
+      src="{% static 'js/stripe.js' %}"
+      data-stripe-token="{{stripe_client}}"
+      defer
+    ></script>
   </head>
   <body>
+    {% csrf_token %}
+    <script>
+      const csrftoken = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+      ).value;
+    </script>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home' %}">VGame</a>
@@ -78,12 +90,11 @@
           </ul>
         </div>
         <div class="col-md-7 col-lg-8">
-          {% csrf_token %}
           <div
             id="paypal-button-container"
             class="paypal-button-container"
           ></div>
-          <div class="card_container">
+          <!-- <div class="card_container">
             <form id="card-form">
               <label for="card-number">Card Number</label>
               <div id="card-number" class="card_field"></div>
@@ -164,7 +175,19 @@
               <br /><br />
               <button value="submit" id="submit" class="btn">Pay</button>
             </form>
-          </div>
+          </div> -->
+          <!-- Display a payment form -->
+          <div><p>Stripe</p></div>
+          <form id="payment-form">
+            <div id="payment-element">
+              <!--Stripe.js injects the Payment Element-->
+            </div>
+            <button id="submit">
+              <div class="spinner hidden" id="spinner"></div>
+              <span id="button-text">Pay now</span>
+            </button>
+            <div id="payment-message" class="hidden"></div>
+          </form>
         </div>
       </div>
       <script src="{% static 'js/checkout.js' %}"></script>
