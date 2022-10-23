@@ -31,7 +31,7 @@ class CreateOrder(APIView):
         amount = str(round(_sum["price__sum"], 2))
 
         access_token = generate_paypal_access_token()
-        url = f"{settings.PAYPAL_API_URL}/v2/checkout/orders"
+        url = f"{settings.PAYMENTS['paypal']['api_url']}/v2/checkout/orders"
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {access_token}",
@@ -58,7 +58,7 @@ class CreateOrder(APIView):
 class CapturePayment(APIView):
     def capture_payment(self, order_id: str):
         access_token = generate_paypal_access_token()
-        url = f"{settings.PAYPAL_API_URL}/v2/checkout/orders/{order_id}/capture"
+        url = f"{settings.PAYMENTS['paypal']['api_url']}/v2/checkout/orders/{order_id}/capture"
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {access_token}",
@@ -125,7 +125,7 @@ class StripeIntentPayment(APIView):
         try:
             # Create a PaymentIntent with the order amount and currency
             intent = stripe.PaymentIntent.create(
-                api_key=settings.STRIPE_SECRET,
+                api_key=settings.PAYMENTS["stripe"]["secret_key"],
                 amount=self.calculate_amount(request),
                 currency="usd",
                 automatic_payment_methods={
@@ -140,7 +140,7 @@ class StripeIntentPayment(APIView):
 class PostStripeIntentPayment(CapturePayment):
     def post(self, request: AuthHttpRequest, client: str):
         intent = stripe.PaymentIntent.retrieve(
-            id=client, api_key=settings.STRIPE_SECRET
+            id=client, api_key=settings.PAYMENTS["stripe"]["secret_key"]
         )
         games_session: list[int] | None = request.session.get("games")
         query = get_games_cart_query(games_session)

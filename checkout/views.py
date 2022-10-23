@@ -30,8 +30,9 @@ class ThankYouView(TemplateView):
 class CheckoutView(LoginRequiredMixin, View):
     login_url = "account_login"
 
-    paypal_client: str = settings.PAYPAL_CLIENT
-    stripe_client: str = settings.STRIPE_CLIENT
+    paypal_client: str = settings.PAYMENTS["paypal"]["client_key"]
+    stripe_client: str = settings.PAYMENTS["stripe"]["client_key"]
+    stripe_url: str = settings.PAYMENTS["stripe"]["url"]
 
     def get(self, request: AuthHttpRequest):
         games_session: list[int] | None = request.session.get("games")
@@ -46,6 +47,7 @@ class CheckoutView(LoginRequiredMixin, View):
             "client_id": client_id,
             "client_token": client_token,
             "stripe_client": self.stripe_client,
+            "data_stripe_url": self.stripe_url,
             "games": queryset,
             "count": queryset.count() if queryset else 0,
             "total": str(round(_sum["price__sum"], 2)) if _sum else "0.00",

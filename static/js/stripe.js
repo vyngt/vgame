@@ -1,5 +1,6 @@
 // This is your test publishable API key.
 const stripe = Stripe(document.currentScript.getAttribute("data-stripe-token"));
+const _return_url = document.currentScript.getAttribute("data-stripe-url");
 
 let elements;
 
@@ -39,7 +40,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "http://localhost/checkout/",
+      return_url: _return_url,
     },
   });
 

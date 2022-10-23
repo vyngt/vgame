@@ -183,13 +183,20 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = "home"
 
 # PAYMENTS
-DOMAIN = os.environ.get("P_DOMAIN")
-
-# Paypal
-PAYPAL_CLIENT = os.environ.get("PAYPAL_CLIENT", "")
-PAYPAL_SECRET = os.environ.get("PAYPAL_SECRET", "")
-PAYPAL_API_URL = os.environ.get("PAYPAL_API_URL", "")
-
-# Stripe
-STRIPE_CLIENT = os.environ.get("STRIPE_CLIENT")
-STRIPE_SECRET = os.environ.get("STRIPE_SECRET")
+PAYMENTS = {
+    "paypal": {
+        "client_key": os.environ.get("PAYPAL_CLIENT", ""),
+        "secret_key": os.environ.get("PAYPAL_SECRET", ""),
+        "api_url": os.environ.get("PAYPAL_API_URL", ""),
+    },
+    "stripe": {
+        "client_key": os.environ.get("STRIPE_CLIENT"),
+        "secret_key": os.environ.get("STRIPE_SECRET"),
+        "url": "http://localhost/checkout/",
+    },
+    "zalopay": {
+        "appid": os.environ.get("ZALO_APP_ID"),
+        "key1": os.environ.get("ZALO_KEY1"),
+        "key2": os.environ.get("ZALO_KEY2"),
+    },
+}
