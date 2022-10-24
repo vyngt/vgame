@@ -1,8 +1,30 @@
 import base64
 import requests
+import braintree
 from django.conf import settings
 
-__all__ = ["generate_paypal_access_token", "generate_paypal_client_token"]
+__all__ = ["generate_paypal_access_token", "generate_paypal_client_token", "DBrainTree"]
+
+
+class DBrainTree:
+    def __init__(self):
+        environment = braintree.Environment.Sandbox  # type:ignore
+        if not settings.PAYMENTS["braintree"]["sandbox"]:
+            environment = braintree.Environment.Production  # type:ignore
+        self.gateway = braintree.BraintreeGateway(
+            braintree.Configuration(
+                environment=environment, **settings.PAYMENTS["braintree"]["config"]
+            )
+        )
+
+    def generate_token(self):
+        return self.gateway.client_token.generate()
+
+    def transact(self, options):
+        return self.gateway.transaction.sale(options)  # type: ignore
+
+    def find_transaction(self, transaction_id):
+        return self.gateway.transaction.find(transaction_id)  # type: ignore
 
 
 def generate_paypal_access_token() -> str:

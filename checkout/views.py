@@ -9,7 +9,7 @@ from vaccount.auth.http import AuthHttpRequest
 from core.models import Game
 from core.utils import get_games_cart_query
 
-from .utils import generate_paypal_client_token
+from .utils import generate_paypal_client_token, DBrainTree
 
 # Create your views here.
 __all__ = [
@@ -48,6 +48,7 @@ class CheckoutView(LoginRequiredMixin, View):
             "client_token": client_token,
             "stripe_client": self.stripe_client,
             "data_stripe_url": self.stripe_url,
+            "braintree_token": DBrainTree().generate_token(),
             "games": queryset,
             "count": queryset.count() if queryset else 0,
             "total": str(round(_sum["price__sum"], 2)) if _sum else "0.00",

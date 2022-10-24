@@ -13,6 +13,7 @@ requests = "*"
 django-extensions = "*"
 whitenoise = "*"
 stripe = "*"
+braintree = "*"
 
 [dev-packages]
 black = "*"

@@ -194,9 +194,12 @@ PAYMENTS = {
         "secret_key": os.environ.get("STRIPE_SECRET"),
         "url": "http://localhost/checkout/",
     },
-    "zalopay": {
-        "appid": os.environ.get("ZALO_APP_ID"),
-        "key1": os.environ.get("ZALO_KEY1"),
-        "key2": os.environ.get("ZALO_KEY2"),
+    "braintree": {
+        "sandbox": True,
+        "config": {
+            "merchant_id": os.environ.get("BRAINTREE_MERCHANT_ID"),
+            "public_key": os.environ.get("BRAINTREE_CLIENT"),
+            "private_key": os.environ.get("BRAINTREE_SECRET"),
+        },
     },
 }

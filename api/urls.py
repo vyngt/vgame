@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import *
-from .views import PostStripeIntentPayment
 
 app_name = "api"
 
@@ -13,4 +12,5 @@ urlpatterns = [
         PostStripeIntentPayment.as_view(),
         name="post_stripe_payment",
     ),
+    path("orders/braintree/", BrainTreePayment.as_view(), name="braintree_payment"),
 ]
