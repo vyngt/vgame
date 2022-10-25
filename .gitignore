@@ -32,3 +32,6 @@ frontend_builder/
 # sandbox
 sandbox.*
 .prettierignore
+
+postgres.env
+docker-compose.yml

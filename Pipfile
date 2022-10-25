@@ -14,6 +14,7 @@ django-extensions = "*"
 whitenoise = "*"
 stripe = "*"
 braintree = "*"
+psycopg2 = "*"
 
 [dev-packages]
 black = "*"
