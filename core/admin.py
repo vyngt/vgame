@@ -35,4 +35,3 @@ class GameAdmin(admin.ModelAdmin):
 
 admin.site.register(Game, GameAdmin)
 admin.site.register(Library)
-admin.site.register(JustFun)

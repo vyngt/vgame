@@ -1,9 +1,17 @@
 import base64
+from decimal import Decimal
 import requests
 import braintree
 from django.conf import settings
+from django.db.models import QuerySet
+from core.models import Game
 
-__all__ = ["generate_paypal_access_token", "generate_paypal_client_token", "DBrainTree"]
+__all__ = [
+    "generate_paypal_access_token",
+    "generate_paypal_client_token",
+    "get_games_sum_price",
+    "DBrainTree",
+]
 
 
 class DBrainTree:
@@ -49,3 +57,7 @@ def generate_paypal_client_token() -> str:
     }
     response = requests.post(url, headers=headers)
     return response.json()["client_token"]
+
+
+def get_games_sum_price(queryset: QuerySet[Game]) -> float:
+    return float(sum(game.price for game in queryset))

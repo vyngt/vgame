@@ -2,7 +2,7 @@ import requests
 import stripe
 from typing import Any
 from django.conf import settings
-from django.db.models import Sum, QuerySet
+from django.db.models import QuerySet
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -13,7 +13,7 @@ from vaccount.models import User
 from core.utils import get_games_cart_query, clear_shopping_session
 from core.models import Game
 
-from checkout.utils import generate_paypal_access_token, DBrainTree
+from checkout.utils import generate_paypal_access_token, DBrainTree, get_games_sum_price
 from checkout.models import OrderDetail, OrderItem, PaymentDetail
 
 from decimal import Decimal
@@ -37,8 +37,8 @@ class CalculateAmountMixin:
 
     def __get_data(self, request: AuthHttpRequest):
         queryset = self.get_game_queryset(request)
-        _sum = queryset.aggregate(Sum("price"))
-        amount = str(round(_sum["price__sum"], 2))
+        _sum = get_games_sum_price(queryset)
+        amount = str(round(_sum, 2))
         return amount, queryset
 
     def calculate_amount(self, request: AuthHttpRequest):
@@ -105,7 +105,7 @@ class CapturePayment(APIView, CalculateAmountMixin):
 
     def add_game_to_user_library(self, user: User, items: list[OrderItem]):
         for item in items:
-            user.library.games.add(item.game)
+            user.library.games.add(item.game)  # type: ignore
 
     def save_into_db(
         self,

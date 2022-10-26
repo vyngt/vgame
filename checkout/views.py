@@ -9,7 +9,7 @@ from vaccount.auth.http import AuthHttpRequest
 from core.models import Game
 from core.utils import get_games_cart_query
 
-from .utils import generate_paypal_client_token, DBrainTree
+from .utils import generate_paypal_client_token, DBrainTree, get_games_sum_price
 
 # Create your views here.
 __all__ = [
@@ -38,7 +38,7 @@ class CheckoutView(LoginRequiredMixin, View):
         games_session: list[int] | None = request.session.get("games")
         query = get_games_cart_query(games_session)
         queryset = Game.objects.filter(query) if query else None
-        _sum = queryset.aggregate(Sum("price")) if queryset else None
+        _sum = get_games_sum_price(queryset) if queryset else None
 
         client_id = self.paypal_client
         client_token = generate_paypal_client_token()
@@ -51,7 +51,7 @@ class CheckoutView(LoginRequiredMixin, View):
             "braintree_token": DBrainTree().generate_token(),
             "games": queryset,
             "count": queryset.count() if queryset else 0,
-            "total": str(round(_sum["price__sum"], 2)) if _sum else "0.00",
+            "total": str(round(_sum, 2)) if _sum else "0.00",
         }
         return render(request, "checkout/index.html", context=context)
 

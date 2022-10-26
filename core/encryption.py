@@ -70,6 +70,14 @@ class BinaryEncryptedField(BinaryField, FVEncrypt):
 
         return self.decrypt(value)
 
+    def get_default(self):
+        if self.has_default() and not callable(self.default):
+            return self.default
+        default = super().get_default()
+        if not default:
+            return ""
+        return default
+
     def to_python(self, value):
         if isinstance(value, str):
             return value
