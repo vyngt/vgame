@@ -30,5 +30,9 @@ class GameAdmin(admin.ModelAdmin):
     readonly_fields = ("slug", "created", "modified")
 
 
+# class JustFunAdmin(admin.ModelAdmin):
+
+
 admin.site.register(Game, GameAdmin)
 admin.site.register(Library)
+admin.site.register(JustFun)

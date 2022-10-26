@@ -3,13 +3,16 @@ from django.utils.translation import gettext_lazy as _
 
 from vaccount.models import User
 from core.models import Game
+from core import encryption
 
 __all__ = ["OrderDetail", "OrderItem", "PaymentDetail"]
 
 
 class PaymentDetail(models.Model):
-    order_id = models.CharField(_("order id"), max_length=100)
-    amount = models.DecimalField(_("amount"), max_digits=6, decimal_places=2)
+    order_id = encryption.BinaryEncryptedField(_("order id"), editable=True)
+    amount = encryption.DecimalEncryptedField(
+        _("amount"), max_digits=6, decimal_places=2, editable=True
+    )  # type:ignore
     objects: models.Manager["PaymentDetail"]
 
     def __str__(self) -> str:
