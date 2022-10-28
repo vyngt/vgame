@@ -20,10 +20,10 @@ class Game(models.Model):
     name = BinaryEncryptedField(_("name"), editable=True)
     description = TextEncryptedField(_("description"), editable=True)
     price = DecimalEncryptedField(_("price"), max_digits=4, decimal_places=2, editable=True)  # type: ignore
-    cover = models.ImageField(
+    cover = ImageEncryptedField(
         _("cover"), upload_to=path_game_cover, default="default/cover.png"  # type: ignore
     )
-    slug = models.SlugField(_("slug"), max_length=130, unique=True)
+    slug = SlugEncryptedField(_("slug"), unique=True)
     modified = models.DateTimeField(_("modified"), auto_now=True)
     created = models.DateTimeField(_("created"), auto_now_add=True)
 

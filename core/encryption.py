@@ -2,7 +2,7 @@ import decimal
 import math
 from typing import Any
 from base64 import urlsafe_b64encode as b64encode, urlsafe_b64decode as b64decode
-from django.db.models import BinaryField
+from django.db.models import BinaryField, SlugField, ImageField
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -15,6 +15,8 @@ __all__ = [
     "TextEncryptedField",
     "DecimalEncryptedField",
     "EmailEncryptedField",
+    "ImageEncryptedField",
+    "SlugEncryptedField",
 ]
 
 KEY = settings.SECRET_KEY
@@ -172,3 +174,29 @@ class DecimalEncryptedField(BinaryEncryptedField):
             return decimal.Decimal(value)
 
         return decimal.Decimal(self.decrypt(value))
+
+
+class ImageEncryptedField(ImageField, FVEncrypt):
+    def get_internal_type(self) -> str:
+        return "BinaryField"
+
+    def get_prep_value(self, value: Any) -> Any:
+        return self.encrypt(value)
+
+    def from_db_value(self, value, expression, connection):
+        if value is None or not value:
+            return value
+        return self.decrypt(value)
+
+
+class SlugEncryptedField(SlugField, FVEncrypt):
+    def get_internal_type(self) -> str:
+        return "BinaryField"
+
+    def get_prep_value(self, value: Any) -> Any:
+        return self.encrypt(value)
+
+    def from_db_value(self, value, expression, connection):
+        if value is None or not value:
+            return value
+        return self.decrypt(value)
