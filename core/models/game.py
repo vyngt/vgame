@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from vaccount.models import User
 from ..utils import build_slug
-from ..encryption import *
+import encryption
 
 __all__ = [
     "path_game_cover",
@@ -11,21 +11,21 @@ __all__ = [
 ]
 
 
-def path_game_cover(instance: "Game", file_name: str) -> str:
+def path_game_cover(instance, file_name: str) -> str:
     return f"{instance.name}/cover/{file_name}"
 
 
 class Game(models.Model):
     pk: int
-    name = BinaryEncryptedField(_("name"), editable=True)
-    description = TextEncryptedField(_("description"), editable=True)
-    price = DecimalEncryptedField(_("price"), max_digits=4, decimal_places=2, editable=True)  # type: ignore
-    cover = ImageEncryptedField(
-        _("cover"), upload_to=path_game_cover, default="default/cover.png"  # type: ignore
+    name = encryption.CharEncryptedField(_("name"))
+    description = encryption.TextEncryptedField(_("description"))
+    price = encryption.DecimalEncryptedField(_("price"), max_digits=4, decimal_places=2)
+    cover = encryption.ImageEncryptedField(
+        _("cover"), upload_to=path_game_cover, default="default/cover.png"
     )
-    slug = SlugEncryptedField(_("slug"), unique=True)
-    modified = models.DateTimeField(_("modified"), auto_now=True)
-    created = models.DateTimeField(_("created"), auto_now_add=True)
+    slug = encryption.SlugEncryptedField(_("slug"), unique=True)
+    modified = encryption.DateTimeEncryptedField(_("modified"), auto_now=True)
+    created = encryption.DateTimeEncryptedField(_("created"), auto_now_add=True)
 
     objects: models.Manager["Game"]
 

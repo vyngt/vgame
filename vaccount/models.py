@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from core import encryption
+import encryption
 
 
 class User(AbstractUser):
@@ -10,28 +10,19 @@ class User(AbstractUser):
 
     username_validator = UnicodeUsernameValidator()
 
-    username = encryption.BinaryEncryptedField(
+    username = encryption.CharEncryptedField(
         _("username"),
         unique=True,
-        editable=True,
         help_text=_("Required. Letters, digits and @/./+/-/_ only."),
         validators=[username_validator],
         error_messages={
             "unique": _("A user with that username already exists."),
         },
     )
-    first_name = encryption.BinaryEncryptedField(
-        _("first name"), editable=True, blank=True
-    )
-    middle_name = encryption.BinaryEncryptedField(
-        _("middle name"), editable=True, blank=True
-    )
-    last_name = encryption.BinaryEncryptedField(
-        _("last name"), editable=True, blank=True
-    )
-    email = encryption.EmailEncryptedField(
-        _("email address"), editable=True, blank=True
-    )
+    first_name = encryption.CharEncryptedField(_("first name"), blank=True)
+    middle_name = encryption.CharEncryptedField(_("middle name"), blank=True)
+    last_name = encryption.CharEncryptedField(_("last name"), blank=True)
+    email = encryption.EmailEncryptedField(_("email address"), blank=True)
 
     objects: UserManager["User"]
 

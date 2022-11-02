@@ -3,16 +3,16 @@ from django.utils.translation import gettext_lazy as _
 
 from vaccount.models import User
 from core.models import Game
-from core import encryption
+import encryption
 
 __all__ = ["OrderDetail", "OrderItem", "PaymentDetail"]
 
 
 class PaymentDetail(models.Model):
-    order_id = encryption.BinaryEncryptedField(_("order id"), editable=True)
+    order_id = encryption.CharEncryptedField(_("order id"))
     amount = encryption.DecimalEncryptedField(
-        _("amount"), max_digits=6, decimal_places=2, editable=True
-    )  # type:ignore
+        _("amount"), max_digits=6, decimal_places=2
+    )
     objects: models.Manager["PaymentDetail"]
 
     def __str__(self) -> str:
@@ -24,8 +24,8 @@ class OrderDetail(models.Model):
     payment = models.OneToOneField(
         PaymentDetail, on_delete=models.CASCADE, verbose_name=_("payment")
     )
-    modified = models.DateTimeField(_("modified"), auto_now=True)
-    created = models.DateTimeField(_("created"), auto_now_add=True)
+    modified = encryption.DateTimeEncryptedField(_("modified"), auto_now=True)
+    created = encryption.DateTimeEncryptedField(_("created"), auto_now_add=True)
     objects: models.Manager["OrderDetail"]
 
     def __str__(self) -> str:
@@ -37,8 +37,8 @@ class OrderItem(models.Model):
         OrderDetail, on_delete=models.CASCADE, verbose_name=_("order detail")
     )
     game = models.ForeignKey(Game, on_delete=models.CASCADE, verbose_name=_("game"))
-    modified = models.DateTimeField(_("modified"), auto_now=True)
-    created = models.DateTimeField(_("created"), auto_now_add=True)
+    modified = encryption.DateTimeEncryptedField(_("modified"), auto_now=True)
+    created = encryption.DateTimeEncryptedField(_("created"), auto_now_add=True)
     objects: models.Manager["OrderItem"]
 
     def __str__(self) -> str:

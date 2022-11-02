@@ -7,6 +7,18 @@ from django.core import checks, exceptions, validators
 
 from .mixins import EncryptionMixin
 
+__all__ = [
+    "BaseEncryptionField",
+    "CharEncryptedField",
+    "TextEncryptedField",
+    "SlugEncryptedField",
+    "EmailEncryptedField",
+    "DecimalEncryptedField",
+    "ImageEncryptedField",
+    "DateEncryptedField",
+    "DateTimeEncryptedField",
+]
+
 
 class BaseEncryptionField(EncryptionMixin, models.Field):
     description = _("String to Binary Data")
@@ -54,6 +66,20 @@ class TextEncryptedField(BaseEncryptionField):
         )
 
 
+class EmailEncryptedField(BaseEncryptionField):
+    default_validators = [validators.validate_email]
+
+    def formfield(self, **kwargs):
+        # As with CharField, this will cause email validation to be performed
+        # twice.
+        return super().formfield(
+            **{
+                "form_class": forms.EmailField,
+                **kwargs,
+            }
+        )
+
+
 class SlugEncryptedField(EncryptionMixin, models.SlugField):
     def __init__(self, *args, allow_unicode=False, **kwargs):
         self.allow_unicode = allow_unicode
@@ -68,7 +94,7 @@ class SlugEncryptedField(EncryptionMixin, models.SlugField):
         return name, path, args, kwargs
 
 
-class DecimalEncryptionField(EncryptionMixin, models.DecimalField):
+class DecimalEncryptedField(EncryptionMixin, models.DecimalField):
     def get_db_prep_save(self, value: Any, connection: Any) -> Any:
         return self.get_db_prep_value(value, connection, False)
 
@@ -79,7 +105,7 @@ class DecimalEncryptionField(EncryptionMixin, models.DecimalField):
         return decimal.Decimal(value)
 
 
-class ImageEncryptionField(EncryptionMixin, models.ImageField):
+class ImageEncryptedField(EncryptionMixin, models.ImageField):
     pass
 
 
