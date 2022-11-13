@@ -105,6 +105,16 @@ DATABASES = {
     }
 }
 
+if bool(int(os.environ.get("REPLICA", 0))):
+    DATABASES["replica"] = {
+        "ENGINE": os.environ.get("DB_REPLICA_ENGINE"),
+        "NAME": os.environ.get("DB_REPLICA_NAME"),
+        "USER": os.environ.get("DB_REPLICA_USER"),
+        "PASSWORD": os.environ.get("DB_REPLICA_PASSWORD"),
+        "HOST": os.environ.get("DB_REPLICA_HOST"),
+        "PORT": os.environ.get("DB_REPLICA_PORT"),
+    }
+    DATABASE_ROUTERS = ["vgame.dbrouter.ReadWriteRouter"]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
